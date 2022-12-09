@@ -139,16 +139,6 @@ def voisin(x, y):
         voisin.append([x, y + 1])
     return voisin
 
-def typePassage(listeVoisins):
-    """indiquer si une case « passage » est une impasse, un passage standard, ou un carrefour. """
-    if len(listeVoisins) == 1:
-        return "impasse"
-    elif len(listeVoisins) == 2:
-        return "passage"
-    elif len(listeVoisins) == 3:
-        return "carrefour"
-    elif len(listeVoisins) == 4:
-        return "carrefour"
 
 def cell2pixel(i,j):
     """i réalise la conversion inverse (coordonnées du centre de la cellule i-j)"""
