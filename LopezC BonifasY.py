@@ -157,11 +157,127 @@ def cell2pixel(i,j):
     return (x, y)
 
 
+def typeCellule(x, y):
+    """reçoit les coordonnées (ligne et colonne)
+d’une case du labyrinthe, et qui renvoie son type : entrée, sortie, passage, mur. """
+    if dicoJeu['entry'] == [x, y]:
+        return "entree"
+    elif dicoJeu['exit'] == [x, y]:
+        return "sortie"
+    else:
+        if dicoJeu['laby'][x][y] == 1:
+            mur.append((x,y))
+            return "mur"
+        elif dicoJeu['laby'][x][y] == 0:
+            return "passage"
+
+
+def voisin(x, y):
+    """reçoit les coordonnées (ligne et colonne) d’une case du labyrinthe, et renvoie la liste
+     des coordonnées des cases voisines (haut, bas, gauche, droite)"""
+    voisin = []
+    if x > 0:
+        voisin.append([x - 1, y])
+    if x < len(dicoJeu['laby']) - 1:
+        voisin.append([x + 1, y])
+    if y > 0:
+        voisin.append([x, y - 1])
+    if y < len(dicoJeu['laby'][0]) - 1:
+        voisin.append([x, y + 1])
+    return voisin
+
+def typePassage(x, y):
+    """indiquer si une case « passage » est une impasse, un passage standard, ou un carrefour. """
+    listeVoisins= voisin(x, y)
+    typeVoisins=[]
+    for coords in listeVoisins:
+        typeVoisins.append(typeCellule(coords[0], coords[1]))
+    if typeVoisins.count("passage") == 1:
+        return "impasse"
+    elif typeVoisins.count("passage") == 2:
+        return "standard"
+    elif typeVoisins.count("passage") == 3:
+        return "carrefour"
+
+
+
+
+def cell2pixel(i,j):
+    """i réalise la conversion inverse (coordonnées du centre de la cellule i-j)"""
+    x = -300 + (50 * j) + 25
+    y = 300 - (50 * i) - 25
+    return (x, y)
+
+
+
+
+def gauche():
+    t.setheading(180)
+    t.forward(50)
+    print("gauche ; left")
+    chemin()
+
+def droite():
+    t.setheading(0)
+    t.forward(50)
+    print("droite ; right")
+    chemin()
+
+def bas():
+    t.setheading(270)
+    t.forward(50)
+    print("bas ; down")
+    chemin()
+
+
+def haut():
+    t.setheading(90)
+    t.forward(50)
+    print("haut ; up")
+    chemin()
+
+
+def chemin():
+    """Empêcher la tortue de passer à travers les murs ou de sortir du labyrinthe par l'entrée. Détecter quand la tortue est sur une case spéciale, et changer sa couleur en
+conséquence : une couleur pour une impasse, une autre couleur pour un carrefour."""
+    t.speed(1)
+    mesCoords = pixel2cell(t.xcor(), t.ycor())
+    quelType=typeCellule(mesCoords[0], mesCoords[1])
+    if quelType=="mur" or quelType=="entree":
+        t.color("red")
+        print("Vous ne pouvez pas passer par la")
+        t.backward(50)
+        t.color("blue")
+    elif quelType == "sortie":
+        print("Bravo, vous avez gagne")
+    elif quelType == "passage":
+        quelTypePassage=typePassage(mesCoords[0], mesCoords[1])
+        if quelTypePassage=="impasse":
+            t.color("green")
+        elif quelTypePassage=="carrefour":
+            t.color("yellow")
+
+
+
+
 # prog principal
 #print (affichetextuel(dicoJeu))
-
 print(afficheGraphique(dicoJeu))
 
 
 t.onscreenclick(testClic)
+
+print(mur)
+
+# key bindings
+t.onkeypress(gauche, "Left")
+t.onkeypress(droite, "Right")
+t.onkeypress(haut, "Up")
+t.onkeypress(bas, "Down")
+t.listen()
+
+# start loop
+t.shape('turtle')
+t.penup()
+t.goto(cell2pixel((entry_co)[0], (entry_co[1])))
 t.mainloop()
