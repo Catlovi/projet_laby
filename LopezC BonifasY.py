@@ -246,6 +246,8 @@ conséquence : une couleur pour une impasse, une autre couleur pour un carrefour
             t.color("green")
         elif quelTypePassage=="carrefour":
             t.color("yellow")
+        elif quelTypePassage=="standard":
+            t.color("blue")    
 
 
 
