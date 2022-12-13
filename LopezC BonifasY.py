@@ -249,7 +249,46 @@ conséquence : une couleur pour une impasse, une autre couleur pour un carrefour
         elif quelTypePassage=="standard":
             t.color("blue")    
 
+def explorer():
+    """il fait explorer la tortue automatiquement à la recherche de la sortie. La tortue fait demi-tour dans les impasses et explore
+    le labyrinthe jusqu’à trouver la sortie. Il faut mémoriser le chemin déjà parcouru,
+    ainsi quand une branche est explorée, la tortue peut revenir sur ses pas et explorer une autre branche."""
+    t.speed(1)
+    miCamino= []
+    mesCoords = pixel2cell(t.xcor(), t.ycor())
+    i=0
+    while mesCoords!=dicoJeu['exit']:
+        # on veut savoir quel type de cellule est devant la tortue
+        if t.heading()==0:
+            quelTypeDevant=typeCellule(mesCoords[0], mesCoords[1]+1)
+            print (mesCoords[0], mesCoords[1]+1)
+            if quelTypeDevant=="passage":
+                t.forward(50)
+                miCamino.append("d")
+            else: t.left(90)
+        if t.heading()==270:
+            quelTypeDevant=typeCellule(mesCoords[0]+1, mesCoords[1])
+            if quelTypeDevant=="passage":
+                t.forward(50)
+                miCamino.append("b")
+            else: t.left(90)
+        if t.heading()==90:
+            quelTypeDevant=typeCellule(mesCoords[0]-1, mesCoords[1])
+            if quelTypeDevant=="passage":
+                t.forward(50)
+                miCamino.append("h")
+            else: t.left(90)
+        if t.heading()==180:
+            quelTypeDevant=typeCellule(mesCoords[0], mesCoords[1]-1)
+            if quelTypeDevant=="passage":
+                    t.forward(50)
+                    miCamino.append("g")
+            else: t.left(90)
 
+        mesCoords = pixel2cell(t.xcor(), t.ycor())
+
+    print("Bravo, vous avez gagne")
+    return miCamino
 
 
 # prog principal
@@ -258,8 +297,6 @@ print(afficheGraphique(dicoJeu))
 
 
 t.onscreenclick(testClic)
-
-print(mur)
 
 # key bindings
 t.onkeypress(gauche, "Left")
@@ -272,4 +309,5 @@ t.listen()
 t.shape('turtle')
 t.penup()
 t.goto(cell2pixel((entry_co)[0], (entry_co[1])))
+explorer()
 t.mainloop()
