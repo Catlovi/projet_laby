@@ -240,12 +240,13 @@ conséquence : une couleur pour une impasse, une autre couleur pour un carrefour
         t.color("blue")
     elif quelType == "sortie":
         print("Bravo, vous avez gagne")
+         t. goto(0,0); t.write("Bravo, vous avez gagné", font=("Verdana", 15, "normal"))
     elif quelType == "passage":
         quelTypePassage=typePassage(mesCoords[0], mesCoords[1])
         if quelTypePassage=="impasse":
             t.color("green")
         elif quelTypePassage=="carrefour":
-            t.color("yellow")
+            t.color("pink")
         elif quelTypePassage=="standard":
             t.color("blue")    
 
