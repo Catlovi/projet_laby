@@ -34,7 +34,7 @@ def labyFromFile(fn) :
     f.close()
     return laby, mazeIn, mazeOut
 
-laby1 = "C:\\Users\\calov\\PycharmProjects\\pythonProject\\laby0.laby"
+laby1 = "C:\\Users\\calov\\PycharmProjects\\pythonProject\\laby1.laby"
 [laby, entry_co, exit_co] = labyFromFile(laby1)
 dicoJeu={
     'laby': laby,
