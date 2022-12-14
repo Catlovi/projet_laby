@@ -261,8 +261,7 @@ def explorer():
     while mesCoords!=dicoJeu['exit']:
         # on veut savoir quel type de cellule est devant la tortue
         if t.heading()==0:
-            quelTypeDevant=typeCellule(mesCoords[0], mesCoords[1]+1)
-            print (mesCoords[0], mesCoords[1]+1)
+            quelTypeDevant=typeCellule(mesCoords[0], mesCoords[1]+1) 
             if quelTypeDevant=="passage":
                 t.forward(50)
                 miCamino.append("d")
@@ -288,7 +287,7 @@ def explorer():
 
         mesCoords = pixel2cell(t.xcor(), t.ycor())
 
-    print("Bravo, vous avez gagne")
+    t. goto(0,0); t.write("Bravo, vous avez gagné", font=("Verdana", 15, "normal"))
     return miCamino
 
 
